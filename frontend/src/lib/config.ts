@@ -1,17 +1,17 @@
 import { StartScreenPrompt } from "@openai/chatkit";
 import { DEFAULT_CAT_STATE } from "./cat";
 
+// URL-ul endpoint-ului ChatKit; folosește variabila de mediu sau fallback la /chatkit pentru local.
 export const CHATKIT_API_URL =
   import.meta.env.VITE_CHATKIT_API_URL ?? "/chatkit";
 
 /**
- * ChatKit still expects a domain key at runtime. Use any placeholder locally,
- * but register your production domain at
- * https://platform.openai.com/settings/organization/security/domain-allowlist
- * and deploy the real key.
+ * Cheia de domeniu ChatKit.
+ * Nu mai există o valoare de rezervă în cod — trebuie setată în mediul de execuție
+ * (de exemplu ca variabilă de mediu VITE_CHATKIT_API_DOMAIN_KEY în Railway sau local).
  */
 export const CHATKIT_API_DOMAIN_KEY =
-  import.meta.env.VITE_CHATKIT_API_DOMAIN_KEY ?? "domain_pk_6915df691f988196972edc97b21d057f0c41556964898e5a";
+  import.meta.env.VITE_CHATKIT_API_DOMAIN_KEY;
 
 export const CAT_STATE_API_URL =
   import.meta.env.VITE_CAT_STATE_API_URL ?? "/cats";
@@ -49,5 +49,7 @@ export const STARTER_PROMPTS: StartScreenPrompt[] = [
 ];
 
 export const getPlaceholder = (catName: string | null) => {
-  return catName === DEFAULT_CAT_STATE.name ? "Ask how the cat feels or what it needs" : `${catName}, what would you like to do?`;
+  return catName === DEFAULT_CAT_STATE.name
+    ? "Ask how the cat feels or what it needs"
+    : `${catName}, what would you like to do?`;
 };
